@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API Example</title>
+    <style>
+        /* Styling for the card */
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 8px;
+            width: 200px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="result"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', fetchData);
+
+    function fetchData() {
+        fetch('http://localhost:3000/api')
+            .then(response => response.json())
+            .then(data => displayData(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    function displayData(data) {
+        const resultDiv = document.getElementById('result');
+        
+        // Clear previous content
+        resultDiv.innerHTML = '';
+
+        // Display fetched data as cards
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+
+            const title = document.createElement('h3');
+            title.textContent = item.nama;
+
+            const details = document.createElement('p');
+            details.textContent = `ID: ${item.id}, Kelas: ${item.kelas}`;
+
+            card.appendChild(title);
+            card.appendChild(details);
+            resultDiv.appendChild(card);
+        });
+    }
+</script>
+
+</body>
+</html>
